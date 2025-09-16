@@ -1,0 +1,20 @@
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+providers:
+  docker:
+    exposedByDefault: false
+
+certificatesResolvers:
+  le:
+    acme:
+      email: shuv1wolf@gmail.com
+      storage: /acme.json
+      httpChallenge:
+        entryPoint: web
+
+api:
+  dashboard: false

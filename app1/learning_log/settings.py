@@ -26,7 +26,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 DJANGO_CSRF_TRUSTED_ORIGINS = ['https://*']
-
+USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
@@ -122,6 +122,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles" 
+WHITENOISE_MAX_AGE = 31536000
+WHITENOISE_USE_FINDERS = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
