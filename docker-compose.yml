@@ -1,8 +1,5 @@
 version: "3.9"
 
-networks:
-  web:
-
 services:
   traefik:
     image: traefik:v3.1
@@ -19,6 +16,8 @@ services:
       - "--certificatesresolvers.le.acme.email=shuv1wolf@gmail.com"
       - "--certificatesresolvers.le.acme.storage=/acme.json"
       - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
+      # staging-сервер для тестов 
+      - "--certificatesresolvers.le.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
     ports:
       - "80:80"
       - "443:443"
@@ -57,4 +56,7 @@ services:
     restart: unless-stopped
     networks: [web]
 
+networks:
+  web:
+    driver: bridge
   
