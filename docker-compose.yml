@@ -44,8 +44,6 @@ services:
   app2:
     build: ./app2
     container_name: app2
-    env_file:
-      - ./app2/.env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app2.rule=Host(`app2.shuv1wolf.ru`)"
