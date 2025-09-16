@@ -33,28 +33,28 @@ services:
     container_name: app1
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app1.rule=Host(`shuv1wolf.ru`) && PathPrefix(`/app1`)"
+      - "traefik.http.routers.app1.rule=Host(`app1.shuv1wolf.ru`)"
       - "traefik.http.routers.app1.entrypoints=websecure"
       - "traefik.http.routers.app1.tls.certresolver=le"
-      - "traefik.http.middlewares.app1-strip.stripprefix.prefixes=/app1"
-      - "traefik.http.routers.app1.middlewares=app1-strip"
       - "traefik.http.services.app1.loadbalancer.server.port=8000"
+    networks:
+      - web
     restart: unless-stopped
-    networks: [web]
 
   app2:
     build: ./app2
     container_name: app2
+    env_file:
+      - ./app2/.env
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app2.rule=Host(`shuv1wolf.ru`) && PathPrefix(`/app2`)"
+      - "traefik.http.routers.app2.rule=Host(`app2.shuv1wolf.ru`)"
       - "traefik.http.routers.app2.entrypoints=websecure"
       - "traefik.http.routers.app2.tls.certresolver=le"
-      - "traefik.http.middlewares.app2-strip.stripprefix.prefixes=/app2"
-      - "traefik.http.routers.app2.middlewares=app2-strip"
       - "traefik.http.services.app2.loadbalancer.server.port=8000"
+    networks:
+      - web
     restart: unless-stopped
-    networks: [web]
 
 networks:
   web:
