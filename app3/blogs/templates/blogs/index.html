@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block page_header %}
+    <div class="jumbotron">
+        <h1 class="display-3">Блог</h1>
+        <p class="lead">Добро пожаловать в блог. Здесь вы можете читать и создавать записи.</p>
+        {% if not user.is_authenticated %}
+            <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">Зарегистрироваться &raquo;</a>
+        {% endif %}
+    </div>
+{% endblock page_header %}
+
+{% block content %}
+    <p>
+        <a href="{% url 'blogs:new_post' %}">Добавить новую запись</a>
+    </p>
+    {% for post in posts %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h4 class="card-title">{{ post.title }}</h4>
+                <p class="card-text">{{ post.text|linebreaks }}</p>
+                <p class="card-text">
+                    <small class="text-muted">
+                        {{ post.date_added|date:'M d, Y H:i' }}
+                        {% if post.owner == user %}
+                            - <a href="{% url 'blogs:edit_post' post.id %}">Редактировать запись</a>
+                        {% endif %}
+                    </small>
+                </p>
+            </div>
+        </div>
+    {% empty %}
+        <p>Пока нет записей в блоге.</p>
+    {% endfor %}
+{% endblock content %}

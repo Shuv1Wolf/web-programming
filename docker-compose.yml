@@ -54,6 +54,19 @@ services:
       - web
     restart: unless-stopped
 
+  app3:
+    build: ./app3
+    container_name: app3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app3.rule=Host(`app3.shuv1wolf.ru`)"
+      - "traefik.http.routers.app3.entrypoints=websecure"
+      - "traefik.http.routers.app3.tls.certresolver=le"
+      - "traefik.http.services.app3.loadbalancer.server.port=8000"
+    networks:
+      - web
+    restart: unless-stopped
+
 networks:
   web:
     driver: bridge
