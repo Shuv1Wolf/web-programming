@@ -11,9 +11,11 @@
 {% endblock page_header %}
 
 {% block content %}
-    <p>
-        <a href="{% url 'blogs:new_post' %}">Добавить новую запись</a>
-    </p>
+    {% if user.is_authenticated %}
+        <p>
+            <a href="{% url 'blogs:new_post' %}">Добавить новую запись</a>
+        </p>
+    {% endif %}
     {% for post in posts %}
         <div class="card mb-3">
             <div class="card-body">
@@ -30,6 +32,10 @@
             </div>
         </div>
     {% empty %}
-        <p>Пока нет записей в блоге.</p>
+        {% if user.is_authenticated %}
+            <p>Пока нет записей в блоге.</p>
+        {% else %}
+            <p>Войдите, чтобы просматривать записи.</p>
+        {% endif %}
     {% endfor %}
 {% endblock content %}
